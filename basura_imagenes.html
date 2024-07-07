@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería de Imágenes</title>
+    <style>
+        .gallery-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            width: 100%;
+            height: 100vh;
+        }
+        .gallery {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .gallery img {
+            max-width: 100%;
+            max-height: 100vh;
+            object-fit: contain;
+        }
+        .arrow {
+            cursor: pointer;
+            font-size: 2rem;
+            user-select: none;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+        .left-arrow {
+            left: 10px;
+        }
+        .right-arrow {
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="gallery-container">
+        <div class="arrow left-arrow" onclick="moveLeft()">&#8592;</div>
+        <div class="gallery" id="gallery">
+            <img src="image1.jpg" alt="Imagen 1">
+            <img src="image2.jpg" alt="Imagen 2">
+            <img src="image3.jpg" alt="Imagen 3">
+        </div>
+        <div class="arrow right-arrow" onclick="moveRight()">&#8594;</div>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+
+        function moveLeft() {
+            const gallery = document.getElementById('gallery');
+            if (currentIndex > 0) {
+                currentIndex--;
+                const offset = -currentIndex * gallery.clientWidth;
+                gallery.style.transform = `translateX(${offset}px)`;
+            }
+        }
+
+        function moveRight() {
+            const gallery = document.getElementById('gallery');
+            if (currentIndex < gallery.children.length - 1) {
+                currentIndex++;
+                const offset = -currentIndex * gallery.clientWidth;
+                gallery.style.transform = `translateX(${offset}px)`;
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            const gallery = document.getElementById('gallery');
+            const offset = -currentIndex * gallery.clientWidth;
+            gallery.style.transform = `translateX(${offset}px)`;
+        });
+    </script>
+</body>
+</html>
